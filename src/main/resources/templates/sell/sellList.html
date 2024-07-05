@@ -1,0 +1,106 @@
+<!DOCTYPE HTML>
+<html xmlns:th="http://www.thymeleaf.org">
+<head th:replace="fragments/header :: header"/>
+<body>
+<div th:replace="fragments/bodyHeader_login :: bodyHeader_login"/>
+<div class="container">
+
+    <div>
+<!--        <table class="table table-striped">-->
+<!--            <thead>-->
+<!--            <tr>-->
+<!--                <th>#</th>-->
+<!--                <th>상품명</th>-->
+<!--                <th>가격</th>-->
+<!--                <th>판매 상태</th>-->
+<!--                <th>등록 날짜</th>-->
+<!--                <th>찜한 사용자수</th>-->
+<!--                <th>카테고리</th>-->
+<!--                <th>가격협상</th>-->
+<!--                <th>거래형태</th>-->
+<!--                <th>물품상태</th>-->
+<!--            </tr>-->
+<!--            </thead>-->
+<!--            <tbody>-->
+<!--            <tr th:each="item : ${items}">-->
+<!--                <td th:text="${item.id}"></td>-->
+<!--                <td th:text="${item.name}"></td>-->
+<!--                <td th:text="${item.price}"></td>-->
+<!--                <td th:text="${item.itemStatus}"></td>-->
+<!--                <td th:text="${item.createdAt}"></td>-->
+<!--                <td th:text="${item.wishCount}"></td>-->
+<!--                <td>-->
+<!--                    <span th:each="category : ${itemCategories}" th:if= "${category.itemIds == item.id} ">-->
+<!--                        <span th:text="${category.categoryName}"></span>-->
+<!--                    </span>-->
+<!--                </td>-->
+<!--                <td th:text="${item.enul}"></td>-->
+<!--                <td th:text="${item.dealForm}"></td>-->
+<!--                <td th:text="${item.itemLevel}"></td>-->
+<!--                <td>-->
+<!--                    <a href="#" th:href="@{/items/{id}/edit (id=${item.id})}"-->
+<!--                       class="btn btn-primary" role="button">수정</a>-->
+<!--                </td>-->
+<!--                <td>-->
+<!--                    <span th:if="${item.buyer == null}"l>-->
+<!--                    <a href="#" th:href="@{/items/{id}/buy (id=${item.id})}"-->
+<!--                       class="btn btn-primary" role="button">거래완료</a>-->
+<!--                    </span>-->
+<!--                    <span th:unless="${item.buyer == null}">-->
+<!--                        <a href="#" onclick="alert('이미 거래완료한 상품입니다.');"-->
+<!--                           class="btn btn-primary" role="button">거래완료</a>-->
+<!--                    </span>-->
+
+<!--                </td>-->
+<!--            </tr>-->
+<!--            </tbody>-->
+<!--        </table>-->
+    </div>
+    <section class="py-5">
+        <div class="container px-4 px-lg-5 mt-5">
+            <div class="row gx-4 gx-lg-5 row-cols-2 row-cols-md-3 row-cols-xl-4 justify-content-center">
+                <tr th:each="item:${items}">
+                    <div class="col mb-5">
+                        <div class="card h-100">
+                            <!-- Product image-->
+                            <span th:each="file : ${files}" th:if= "${file.itemId == item.id} and ${file.mainPicture}">
+                                <img class="card-img-top" th:src="@{/img/{filename} (filename=${file.filename})}">
+                            </span>
+                            <!-- Product details-->
+                            <div class="card-body p-4">
+                                <div class="text-center">
+                                    <!-- Product name-->
+                                    <h5 class="fw-bolder"><td th:text="${item.name}"></td></h5>
+                                    <!-- Product price-->
+                                    <td th:text="${item.price}"></td>
+                                    <td th:text="${item.itemStatus}"></td>
+                                </div>
+                            </div>
+                            <!-- Product actions-->
+                            <div class="card-footer p-4 pt-0 border-top-0 bg-transparent">
+                                <div class="text-center">
+                                    <span th:if="${item.buyer == null}"l>
+                                        <a href="#" th:href="@{/items/{id}/buy (id=${item.id})}"
+                                            class="btn btn-primary" role="button">거래완료</a>
+                                    </span>
+                                    <span th:unless="${item.buyer == null}">
+                                        <a href="#" onclick="alert('이미 거래완료한 상품입니다.');"
+                                        class="btn btn-primary" role="button">거래완료</a>
+                                    </span>
+                                    <a href="#" th:href="@{/items/{id}/edit (id=${item.id})}"
+                                       class="btn btn-primary" role="button">수정</a>
+                                </div>
+
+                            </div>
+
+                        </div>
+                    </div>
+                </tr>
+            </div>
+        </div>
+    </section>
+    <div th:replace="fragments/footer :: footer"/>
+</div> <!-- /container -->
+<script src="/docs/5.1/dist/js/bootstrap.bundle.min.js" integrity="sha384-ka7Sk0Gln4gmtz2MlQnikT1wXgYsOg+OMhuP+IlRH9sENBO0LRn5q+8nbTov4+1p" crossorigin="anonymous"></script>
+</body>
+</html>

@@ -1,0 +1,148 @@
+<!DOCTYPE HTML>
+<html xmlns:th="http://www.thymeleaf.org">
+<head th:replace="fragments/header :: header">
+
+  <title>Hello</title>
+  <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+</head>
+<style>
+  body{
+    background-color: rgba(0,82,255,0.04);
+  }
+  .carousel-control-prev{
+    width: 30%;
+  }
+  .carousel-control-next{
+    width: 30%;
+  }
+  .listview{
+    margin-top: 5%;
+    text-decoration: underline;
+    font-size: 30px;
+    color: #232424;
+  }
+  .listview2{
+    margin: 3%;
+    font-size: 20px;
+  }
+</style>
+<body class="text-center">
+<div th:replace="fragments/bodyHeader_login :: bodyHeader_login" />
+<div th:block th:replace="fragments/sidebar :: sidebar"></div>
+<div id="myCarousel" class="carousel slide" data-bs-ride="carousel">
+  <div class="carousel-indicators">
+    <button type="button" data-bs-target="#myCarousel" data-bs-slide-to="0" class="active" aria-label="Slide 1" aria-current="true"></button>
+    <button type="button" data-bs-target="#myCarousel" data-bs-slide-to="1" aria-label="Slide 2" class=""></button>
+    <button type="button" data-bs-target="#myCarousel" data-bs-slide-to="2" aria-label="Slide 3" class=""></button>
+  </div>
+  <div class="carousel-inner">
+    <div class="carousel-item active">
+      <img src="/img/background1.png" width="100%" height="500px"/>
+      <div class="container">
+        <div class="carousel-caption text-start">
+        </div>
+      </div>
+    </div>
+    <div class="carousel-item">
+      <img src="/img/background2.png"width="100%" height="500px"/>
+      <div class="container">
+        <div class="carousel-caption">
+        </div>
+      </div>
+    </div>
+    <div class="carousel-item">
+      <img src="/img/background3.png"width="100%" height="500px"/>
+      <div class="container">
+        <div class="carousel-caption text-end">
+        </div>
+      </div>
+    </div>
+  </div>
+  <button class="carousel-control-prev" type="button" data-bs-target="#myCarousel" data-bs-slide="prev">
+    <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+    <span class="visually-hidden">Previous</span>
+  </button>
+  <button class="carousel-control-next" type="button" data-bs-target="#myCarousel" data-bs-slide="next">
+    <span class="carousel-control-next-icon" aria-hidden="true"></span>
+    <span class="visually-hidden">Next</span>
+  </button>
+</div>
+<script src="//cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+<script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
+<script src="http://code.jquery.com/jquery-latest.js"></script>
+<script>
+  $( '.top' ).click( function() {
+    $( 'html, body' ).animate( { scrollTop : 0 }, 400 );
+    return false;
+  } );
+
+  function toss() {
+    var url = "/QRdeal/tossQR";
+    var name = "TossQR";
+    var option = "width = 300, height = 300, top = 250, left = 600, location = no"
+    window.open(url, name, option);
+  }
+
+  function kakao() {
+    var url = "/QRdeal/kakaoQR";
+    var name = "KakaoQR";
+    var option = "width = 300, height = 300, top = 250, left = 600, location = no"
+    window.open(url, name, option);
+  }
+  function confirm() {
+    Swal.fire({
+      title : "찜목록 추가",
+      text : '찜목록에 추가하시겠습니까?',
+      icon : "question",
+      showCancelButton : true,
+      confirmButtonText : "예",
+      cancelButtonText : "아니오",
+    }).then((result) => {
+      if (result.isConfirmed) {
+        document.addWish.submit();
+      }
+    })
+  }
+</script>
+<h1 class="listview">중고거래 매물 보기</h1>
+<h4 class="listview2">지역 주민들과 투게더 거래해요</h4>
+<section class="py-5">
+  <div class="container px-4 px-lg-5 mt-5">
+    <div class="row gx-4 gx-lg-5 row-cols-2 row-cols-md-3 row-cols-xl-4 justify-content-center">
+      <tr th:each="item:${items}">
+        <div class="col mb-5">
+          <div class="card h-100">
+            <!-- Product image-->
+            <span th:each="file : ${files}" th:if= "${file.itemId == item.id} and ${file.mainPicture}">
+                <img class="card-img-top" th:src="@{/img/{filename} (filename=${file.filename})}">
+              </span>
+            <!-- Product details-->
+            <div class="card-body p-4">
+              <div class="text-center">
+                <!-- Product name-->
+                <h5 class="fw-bolder"><td th:text="${item.name}"></td></h5>
+                <!-- Product price-->
+                <td th:text="${item.price}"></td>
+              </div>
+            </div>
+            <!-- Product actions-->
+            <div class="card-footer p-4 pt-0 border-top-0 bg-transparent">
+              <div class="text-center">
+                <form th:action="@{/items/{id}/wish (id=${item.id})}" method="post" name="addWish">
+                  <a href="#" th:href= "@{/items/{id}/itemView (id=${item.id})}"class="btn btn-outline-dark mt-auto" role="button">View</a>
+                  <button class="btn btn-outline-dark mt-auto" type="button" onclick="confirm()">찜</button>
+                </form>
+              </div>
+
+            </div>
+
+          </div>
+        </div>
+      </tr>
+    </div>
+  </div>
+</section>
+<div th:replace="fragments/footer :: footer" />
+</div>
+</body>
+</html>

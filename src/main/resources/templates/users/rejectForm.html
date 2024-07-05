@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<script src="//cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+<script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
+<body>
+<div>
+    <hidden id="test" onclick="reject()"></hidden>
+    <script>
+        var ele =document.getElementById('test'); // 변수에 엘리먼트 저장
+        function reject() {
+            swal({
+                title: "이미 등록된 전화번호 입니다.",
+                icon: "error",
+                closeOnClickOutside: false
+            }).then(function () {
+                history.back();
+            });
+        }
+        ele.click();
+    </script>
+</div>
+</body>
+</html>

@@ -1,0 +1,116 @@
+<!DOCTYPE HTML>
+<html xmlns:th="http://www.thymeleaf.org">
+<head th:replace="fragments/header :: header" />
+<body>
+<script src="//cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+<script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
+<script src="http://code.jquery.com/jquery-latest.js"></script>
+<script>
+    function confirm() {
+        Swal.fire({
+            title : "찜목록 삭제",
+            text : '찜목록에서 삭제하시겠습니까?',
+            icon : "question",
+            showCancelButton : true,
+            confirmButtonText : "예",
+            cancelButtonText : "아니오",
+        }).then((result) => {
+            if (result.isConfirmed) {
+                document.deleteWish.submit();
+            }
+        })
+    }
+    function confirm2() {
+        Swal.fire({
+            title : "찜목록 삭제",
+            text : '찜목록에서 삭제하시겠습니까?',
+            icon : "question",
+            showCancelButton : true,
+            confirmButtonText : "예",
+            cancelButtonText : "아니오",
+        }).then((result) => {
+            if (result.isConfirmed) {
+                document.deleteWish2.submit();
+            }
+        })
+    }
+</script>
+<div th:replace="fragments/bodyHeader_login :: bodyHeader_login"/>
+<div class="container">
+
+    <div>
+<!--        <table class="table table-striped">-->
+<!--            <thead>-->
+<!--            <tr>-->
+<!--                <th>#</th>-->
+<!--                <th>상품명</th>-->
+<!--                <th>가격</th>-->
+<!--                <th>등록자</th>-->
+<!--                <th>등록날짜</th>-->
+<!--                <th></th>-->
+<!--            </tr>-->
+<!--            </thead>-->
+<!--            <tbody>-->
+<!--            <tr th:each="item : ${wishList}">-->
+<!--                <td th:text="${item.getWishItemIdx()}"></td>-->
+<!--                <td th:text="${item.getWishItemName()}"></td>-->
+<!--                <td th:text="${item.getWishItemPrice()}"></td>-->
+<!--                <td th:text="${item.getWishItemSeller()}"></td>-->
+<!--                <td th:text="${item.getWishItemCreateTime()}"></td>-->
+
+<!--                <td>-->
+<!--                    <form th:action="@{/wish/{id}/removeWish (id=${item.id})}" method="post" name="deleteWish2">-->
+<!--                        <button class="w-100 btn btn-dark btn-lg" type="button" onclick="confirm2()">-->
+<!--                            찜하기 취소-->
+<!--                        </button>-->
+<!--                    </form>-->
+<!--                </td>-->
+<!--            </tr>-->
+<!--            </tbody>-->
+<!--        </table>-->
+    </div>
+    <section class="py-5">
+        <div class="container px-4 px-lg-5 mt-5">
+            <div class="row gx-4 gx-lg-5 row-cols-2 row-cols-md-3 row-cols-xl-4 justify-content-center">
+                <tr th:each="item:${wishList}">
+                    <div class="col mb-5">
+                        <div class="card h-100">
+                            <!-- Product image-->
+                            <span th:each="file : ${files}" th:if= "${file.itemId == item.wishItemIdx} and ${file.mainPicture}">
+                                <img class="card-img-top" th:src="@{/img/{filename} (filename=${file.filename})}">
+                            </span>
+                            <!-- Product details-->
+                            <div class="card-body p-4">
+                                <div class="text-center">
+                                    <!-- Product name-->
+                                    <h5 class="fw-bolder"><td th:text="${item.getWishItemName()}"></td></h5>
+                                    <!-- Product price-->
+                                    <td th:text="${item.getWishItemPrice()}"></td>
+                                </div>
+                            </div>
+                            <!-- Product actions-->
+                            <div class="card-footer p-4 pt-0 border-top-0 bg-transparent">
+                                <div class="text-center">
+                                    <form th:action="@{/wish/{id}/removeWish (id=${item.id})}" method="post" name="deleteWish">
+                                        <a href="#" th:href= "@{/items/{id}/itemView (id=${item.wishItemIdx})}"class="btn btn-outline-dark mt-auto" role="button">View</a>
+                                        <button class="btn btn-outline-dark mt-auto" type="button" onclick="confirm()">
+                                            찜하기 취소
+                                        </button>
+                                    </form>
+
+                                </div>
+
+                            </div>
+
+                        </div>
+                    </div>
+                </tr>
+            </div>
+        </div>
+    </section>
+    <div th:replace="fragments/footer :: footer"/>
+    <script src="//cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+    <script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
+</div> <!-- /container -->
+</body>
+</html>
